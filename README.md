@@ -7,9 +7,17 @@
 * submit solutions
 * collect stats on when each task was started and finished
 
+## Installation
+
+```sh
+pip install git+https://github.com/jannismain/advent_of_code.git
+```
+
+## Configuration
+
+Follow [`aocd`'s Quickstart guide](https://github.com/wimglenn/advent-of-code-data) to provide your cookie/token either as `AOC_SESSION` environment variable or as `~/.config/aocd/token` file.
+
 ## Usage
-
-
 
 ```sh
 # Start working on today's puzzle

@@ -13,7 +13,7 @@ authors = [{ "name" = "Jannis Mainczyk", "email" = "jmainczyk@gmail.com" }]
 dependencies = ["aocd", "typer[all]"]
 
 [tool.setuptools]
-py-modules = ["aoc_try"]
+py-modules = ["aoc_try", "boilerplate"]
 
 [tool.setuptools.packages]
 find = { namespaces = false } # Disable implicit namespaces

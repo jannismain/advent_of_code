@@ -11,7 +11,7 @@ import typer
 
 app = typer.Typer()
 
-boilerplate = pathlib.Path("boilerplate.py")
+boilerplate = pathlib.Path(__file__).with_name("boilerplate.py")
 
 
 @app.command()

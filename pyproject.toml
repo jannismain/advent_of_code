@@ -1,0 +1,40 @@
+# Python packaging & distribution
+[build-system]
+requires = ["setuptools >= 63.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aoc-try"
+description = "Utilities for solving Advent of Code puzzles using Python scripts."
+readme = "README.md"
+requires-python = ">=3.10"
+version = "0.0.1"
+authors = [{ "name" = "Jannis Mainczyk", "email" = "jmainczyk@gmail.com" }]
+dependencies = ["aocd", "typer[all]"]
+
+[tool.setuptools]
+py-modules = ["aoc_try"]
+
+[tool.setuptools.packages]
+find = { namespaces = false } # Disable implicit namespaces
+
+[project.scripts]
+try = "aoc_try:app"
+
+# Python tooling
+
+[tool.black]
+line-length = 105
+target-version = ["py38"]
+extend_exclude = "ext"
+
+# https://github.com/timothycrosley/isort
+[tool.isort]
+profile = "black"
+py_version = 38
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+line_length = 105
+known_first_party = ["telemetry_specification"]

@@ -81,8 +81,7 @@ def main(
         print(e.stdout)
         print(e.stderr)
         exit(1)
-    logs = result.stderr.strip().splitlines()
-    if logs:
+    if logs := result.stderr.strip().splitlines():
         [typer.secho(f"{log}", dim=True) for log in logs]
     answer = result.stdout.strip()
     if "\n" in answer:

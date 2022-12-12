@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from os import environ
 import pathlib
 import json
 import subprocess
@@ -67,6 +68,8 @@ def main(
             json.dump(stats, fp_stats.open("w"), indent=2)
         exit(1)
     if test:
+        env = environ
+        env.update(dict(PART=part))
         result = subprocess.run(["pytest", "-s", fp_script], stdout=stdout, stderr=stderr)
         exit(result.returncode)
     try:

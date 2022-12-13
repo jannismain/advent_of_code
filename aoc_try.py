@@ -88,7 +88,9 @@ def main(
         [typer.secho(f"{log}", dim=True) for log in logs]
     answer = result.stdout.strip()
     typer.secho(answer)
-    print(f"Answer: {answer.splitlines()[-1]}")
+
+    answer = answer.splitlines()[-1]
+    print(f"Answer: {answer}")
     if typer.confirm("Submit?"):
         try:
             submit(answer, part=part, year=year, day=day)

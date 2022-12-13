@@ -87,32 +87,27 @@ def main(
     if logs := result.stderr.strip().splitlines():
         [typer.secho(f"{log}", dim=True) for log in logs]
     answer = result.stdout.strip()
-    if "\n" in answer:
-        # if there is more than a single line of output,
-        # the script is most likely producing output
-        # other than the actual answer.
-        typer.secho(answer)
-    else:
-        print(f"Answer: {answer}")
-        if typer.confirm("Submit?"):
-            try:
-                submit(answer, part=part, year=year, day=day)
+    typer.secho(answer)
+    print(f"Answer: {answer.splitlines()[-1]}")
+    if typer.confirm("Submit?"):
+        try:
+            submit(answer, part=part, year=year, day=day)
 
-                # update stats on first successful submission
-                if task in stats_this_year and "ended" not in stats_this_year[task]:
-                    stats_this_year[task]["ended"] = now()
-                    stats_this_year[task]["duration"] = int(
-                        (
-                            datetime.fromisoformat(stats[f"{year}"][task]["ended"])
-                            - datetime.fromisoformat(stats[f"{year}"][task]["started"])
-                        ).total_seconds()
-                    )
-                    if task.endswith("a"):
-                        stats_this_year[task.replace("a", "b")] = dict(started=now())
-                    json.dump(stats, fp_stats.open("w"), indent=2)
-            except AocdError as e:
-                typer.secho(e, err=True, fg="red")
-                exit(1)
+            # update stats on first successful submission
+            if task in stats_this_year and "ended" not in stats_this_year[task]:
+                stats_this_year[task]["ended"] = now()
+                stats_this_year[task]["duration"] = int(
+                    (
+                        datetime.fromisoformat(stats[f"{year}"][task]["ended"])
+                        - datetime.fromisoformat(stats[f"{year}"][task]["started"])
+                    ).total_seconds()
+                )
+                if task.endswith("a"):
+                    stats_this_year[task.replace("a", "b")] = dict(started=now())
+                json.dump(stats, fp_stats.open("w"), indent=2)
+        except AocdError as e:
+            typer.secho(e, err=True, fg="red")
+            exit(1)
 
 
 def now() -> str:

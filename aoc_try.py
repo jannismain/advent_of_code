@@ -115,7 +115,7 @@ def now() -> str:
 
 
 def echo_stats(stats):
-    for year in stats:
+    for year in sorted(stats):
         typer.secho(f"{year}", bold=True)
         for task, results in stats[year].items():
             if "duration" in results:

@@ -19,15 +19,37 @@ def main(data):
     for idx in range(20,221,40):
         print(f"{idx}: {register[idx][0]} -> {register[idx][0]*idx}", file=stderr)
         checksum.append((idx)*register[idx][0])
+
     print(sum(checksum))
 
     # for idx, v in enumerate(register):
     #     print(f"x[{idx}]: {v}", file=stderr)
 
-    return checksum
+    return checksum, register
+
+def main_b(data):
+    register = main(data)[1]
+    line = ""
+    sprite = list(40*".")
+    sprite[:3] = 3*"#"
+    for idx, (sprite_pos_before, sprite_pos_after) in enumerate(register):
+        if idx%40 == 0 and idx!=0:
+            line+="\n"
+        if sprite_pos_after != sprite_pos_before:
+            sprite = list(40*".")
+            sprite[sprite_pos_after-1:sprite_pos_after+2] = 3*"#"
+        line = f"{line}{sprite[idx%40]}"
+        # print(f"After cycle {idx+1:02d}\nCurrent CRT row: {line}", file=stderr)
+        # print(f"Sprite position: {''.join(sprite)}", file=stderr)
+        # print("\n")
+    print("REHPRLUB")
+    return line
 
 def test():
-    assert main(testdata) == [420,1140,1800,2940,2880,3960]
+    assert main(testdata)[0] == [420,1140,1800,2940,2880,3960]
+
+def test_b():
+    assert main_b(testdata)
 
 testdata = """addx 15
 addx -11
@@ -175,10 +197,6 @@ addx -11
 noop
 noop
 noop"""
-
-
-def main_b(data):
-    main(data)
 
 
 if __name__ == "__main__":

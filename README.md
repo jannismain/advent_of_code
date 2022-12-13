@@ -15,7 +15,7 @@ pip install git+https://github.com/jannismain/advent_of_code.git
 
 ## Configuration
 
-Follow [`aocd`'s Quickstart guide](https://github.com/wimglenn/advent-of-code-data) to provide your cookie/token either as `AOC_SESSION` environment variable or as `~/.config/aocd/token` file.
+Follow [`aocd`'s Quickstart guide](https://github.com/wimglenn/advent-of-code-data) to provide your AOC cookie/token either as `AOC_SESSION` environment variable or as `~/.config/aocd/token` file.
 
 ## Usage
 

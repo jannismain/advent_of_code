@@ -5,12 +5,12 @@ def main(data):
     print(data)
 
 
-def test():
-    ...
-
-
 def main_b(data):
     main(data)
+
+
+def test():
+    ...
 
 
 if __name__ == "__main__":

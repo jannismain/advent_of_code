@@ -12,7 +12,7 @@ class Monkey:
     items_handled: int = 0
 
 
-def main(data):
+def main(data, part="a"):
     data += "\n\n"
     monkeys: list[Monkey] = []
     for idx, line in enumerate(data.splitlines()):
@@ -39,18 +39,19 @@ def main(data):
     for monkey in monkeys:
         print(monkey)
 
-    for n_round in range(20):
+    for n_round in range(20 if part == "a" else 10000):
         for monkey in monkeys:
             for _ in range(len(monkey.items)):
                 item = monkey.items.pop(0)
                 monkey.items_handled += 1
                 item = eval(monkey.operation, dict(old=item))
-                item = item // 3
+                if part == "a":
+                    item = item // 3
                 throw_to = monkey.throw_to[item % monkey.test_divisible_by == 0]
                 monkeys[throw_to].items.append(item)
         print(f"\nAfter round {n_round+1}:")
-        for idx, monkey in enumerate(monkeys):
-            print(f"Monkey {idx}: {monkey.items}")
+        # for idx, monkey in enumerate(monkeys):
+        #     print(f"Monkey {idx}: {monkey.items}")
 
     checksum = sorted(m.items_handled for m in monkeys)
     print(checksum[-1] * checksum[-2])
@@ -58,13 +59,18 @@ def main(data):
 
 
 def main_b(data):
-    main(data)
+    # TODO: improve performance
+    main(data, part="b")
 
 
 def test():
-    monkeys = main(testdata)
+    monkeys = main(testdata, "a")
     assert len(monkeys) == 4
     assert [m.items_handled for m in monkeys] == [101, 95, 7, 105]
+
+    monkeys = main(testdata, "b")
+    assert len(monkeys) == 4
+    assert [m.items_handled for m in monkeys] == [52166, 47830, 1938, 52013]
 
 
 testdata = """

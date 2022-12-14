@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
 @dataclass
@@ -36,22 +36,17 @@ def main(data, part="a"):
                 )
             )
 
-    for monkey in monkeys:
-        print(monkey)
+    magic_number = lcm(*[monkey.test_divisible_by for monkey in monkeys])
 
-    for n_round in range(20 if part == "a" else 10000):
+    for _ in range(20 if part == "a" else 10000):
         for monkey in monkeys:
             for _ in range(len(monkey.items)):
                 item = monkey.items.pop(0)
                 monkey.items_handled += 1
                 item = eval(monkey.operation, dict(old=item))
-                if part == "a":
-                    item = item // 3
+                item = item // 3 if part == "a" else item % magic_number
                 throw_to = monkey.throw_to[item % monkey.test_divisible_by == 0]
                 monkeys[throw_to].items.append(item)
-        print(f"\nAfter round {n_round+1}:")
-        # for idx, monkey in enumerate(monkeys):
-        #     print(f"Monkey {idx}: {monkey.items}")
 
     checksum = sorted(m.items_handled for m in monkeys)
     print(checksum[-1] * checksum[-2])
@@ -59,8 +54,45 @@ def main(data, part="a"):
 
 
 def main_b(data):
-    # TODO: improve performance
     main(data, part="b")
+
+
+def prime_factors(n):
+    todo = [n]
+    pf = []
+    while todo:
+        x = todo.pop()
+        for i in range(2, x + 1):
+            if (x % i) == 0:
+                pf.append(i)
+                if (f := x // i) > 1:
+                    todo.append(f)
+                break
+    return pf
+
+
+def divisors(n):
+    return {x for x in range(2, n + 1) if n % x == 0}
+
+
+def gcd(a, b) -> int:
+    try:
+        return sorted(divisors(a) & divisors(b))[-1]
+    except IndexError:
+        return 1
+
+
+def lcm(*args) -> int:
+    args = list(args)
+    while args:
+        a = args.pop()
+        b = args.pop()
+        lcm = int(abs(a * b) / gcd(a, b))
+        if not args:
+            return lcm
+        else:
+            args.append(lcm)
+    return
 
 
 def test():
@@ -114,5 +146,5 @@ if __name__ == "__main__":
         # because year and day can be found in path of this file
         # aocd can determine which data to pull automatically.
         from aocd import data
-    test()
+    # test()
     main(data) if PART == "a" else main_b(data)

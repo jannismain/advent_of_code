@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from os import environ
-import pathlib
 import json
+import pathlib
 import subprocess
 from datetime import datetime, timedelta
+from os import environ
 from sys import stderr, stdout
 from typing import Optional
 
@@ -18,13 +18,13 @@ boilerplate = pathlib.Path(__file__).with_name("boilerplate.py")
 @app.command()
 def main(
     cmd: Optional[str] = typer.Argument(""),
-    year: int = 2022,
+    year: int = datetime.now().year,
     day: int = datetime.now().day,
     part="a",
     test: bool = False,
     show_stats: bool = False,
 ):
-    from aocd import get_data, submit, AocdError
+    from aocd import AocdError, get_data, submit
 
     # parse mini-command language
     if "b" in cmd:

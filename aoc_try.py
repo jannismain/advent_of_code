@@ -98,12 +98,6 @@ def main(
             # update stats on first successful submission
             if task in stats_this_year and "ended" not in stats_this_year[task]:
                 stats_this_year[task]["ended"] = now()
-                stats_this_year[task]["duration"] = int(
-                    (
-                        datetime.fromisoformat(stats[f"{year}"][task]["ended"])
-                        - datetime.fromisoformat(stats[f"{year}"][task]["started"])
-                    ).total_seconds()
-                )
                 if task.endswith("a"):
                     stats_this_year[task.replace("a", "b")] = dict(started=now())
                 json.dump(stats, fp_stats.open("w"), indent=2)
@@ -120,8 +114,10 @@ def echo_stats(stats):
     for year in sorted(stats):
         typer.secho(f"{year}", bold=True)
         for task, results in stats[year].items():
-            if "duration" in results:
-                typer.secho(f"- {task} solved in {timedelta(seconds=results['duration'])}")
+            if "ended" in results:
+                ended = datetime.fromisoformat(results["ended"])
+                started = datetime.fromisoformat(results["started"])
+                typer.secho(f"- {task} solved in {ended-started}")
             else:
                 typer.secho(f"- {task} unsolved")
 

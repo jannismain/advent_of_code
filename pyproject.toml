@@ -38,3 +38,6 @@ force_grid_wrap = 0
 combine_as_imports = true
 line_length = 105
 known_first_party = ["telemetry_specification"]
+
+[tool.ruff]
+line-length = 105

@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 
 
-def main(data):
+def parse(data: str):
     print(data)
+
+
+def main(data):
+    if isinstance(data, str):
+        data = parse(data)
 
 
 def main_b(data):

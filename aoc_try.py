@@ -44,19 +44,19 @@ def main(
 
     task = f"{day}{part}"
 
-    data = get_data(year=year, day=day)
-    fp_script = pathlib.Path(f"{year}/{day:02d}.py")
-
     fp_stats = pathlib.Path(typer.get_app_dir("aoc-try", force_posix=True)) / "stats.json"
     fp_stats.parent.mkdir(exist_ok=True, parents=True)
     stats = json.load(fp_stats.open()) if fp_stats.is_file() else {}
-    if f"{year}" not in stats:
-        stats[f"{year}"] = {}
-    stats_this_year = stats[f"{year}"]
+
     if show_stats:
         echo_stats(stats)
         exit(0)
 
+    if f"{year}" not in stats:
+        stats[f"{year}"] = {}
+    stats_this_year = stats[f"{year}"]
+
+    fp_script = pathlib.Path(solution_dir / str(year) / f"{day:02d}.py")
     if not fp_script.is_file():
         if typer.confirm(f"Create new solution script for {year}/{day:02d}?", default=True):
             fp_script.parent.mkdir(exist_ok=True)
@@ -76,7 +76,7 @@ def main(
         result = subprocess.run(
             ["python", fp_script, part],
             text=True,
-            input=data,
+            input=get_data(year=year, day=day),
             capture_output=True,
             check=True,
         )

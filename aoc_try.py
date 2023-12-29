@@ -3,7 +3,7 @@
 import json
 import pathlib
 import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime
 from os import environ
 from sys import stderr, stdout
 from typing import Optional
@@ -12,7 +12,8 @@ import typer
 
 app = typer.Typer()
 
-boilerplate = pathlib.Path(__file__).with_name("boilerplate.py")
+solution_dir = pathlib.Path(__file__).with_name("solutions")
+boilerplate = solution_dir / "boilerplate.py"
 
 
 @app.command()
@@ -56,13 +57,11 @@ def main(
         stats[f"{year}"] = {}
     stats_this_year = stats[f"{year}"]
 
-    fp_script = pathlib.Path(solution_dir / str(year) / f"{day:02d}.py")
+    fp_script = pathlib.Path(solution_dir / f"{year}_{day:02d}.py")
     if not fp_script.is_file():
-        if typer.confirm(f"Create new solution script for {year}/{day:02d}?", default=True):
+        if typer.confirm(f"Create new solution script for {year}_{day:02d}?", default=True):
             fp_script.parent.mkdir(exist_ok=True)
-            fp_script.open("w").write(
-                boilerplate.open().read().replace("YEAR, DAY = 2021, 1", f"YEAR, DAY = {year}, {day}")
-            )
+            fp_script.open("w").write(boilerplate.open().read())
             typer.launch(f"https://adventofcode.com/{year}/day/{day}")
             stats_this_year[task] = dict(started=now())
             json.dump(stats, fp_stats.open("w"), indent=2)

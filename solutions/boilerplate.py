@@ -6,11 +6,16 @@ def main(data):
 
 
 def main_b(data):
-    main(data)
+    return main(data)
+
+
+testdata = """
+"""
 
 
 def test():
-    ...
+    assert main(testdata) == 0
+    assert main_b(testdata) == 0
 
 
 if __name__ == "__main__":

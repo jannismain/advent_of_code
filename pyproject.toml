@@ -13,7 +13,7 @@ authors = [{ "name" = "Jannis Mainczyk", "email" = "jmainczyk@gmail.com" }]
 dependencies = ["aocd", "typer[all]"]
 
 [tool.setuptools]
-py-modules = ["aoc_try", "boilerplate"]
+py-modules = ["aoc_try"]
 
 [tool.setuptools.packages]
 find = { namespaces = false } # Disable implicit namespaces
@@ -41,3 +41,9 @@ known_first_party = ["telemetry_specification"]
 
 [tool.ruff]
 line-length = 105
+
+[tool.pytest.ini_options]
+testpaths = ["solutions"]
+python_files = ["*.py"]
+log_cli = true
+log_cli_level = "INFO"

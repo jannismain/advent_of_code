@@ -19,7 +19,7 @@ boilerplate = solution_dir / "boilerplate.py"
 @app.command()
 def main(
     cmd: Optional[str] = typer.Argument(""),
-    year: int = datetime.now().year,
+    year: int = datetime.now().year if datetime.now().month >= 12 else datetime.now().year - 1,
     day: int = datetime.now().day,
     part="a",
     test: bool = False,

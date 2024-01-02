@@ -24,6 +24,7 @@ def main(
     part="a",
     test: bool = False,
     show_stats: bool = False,
+    submit: bool = False,
 ):
     from aocd import AocdError, get_data, submit
 
@@ -90,7 +91,7 @@ def main(
 
     answer = answer.splitlines()[-1]
     print(f"Answer: {answer}")
-    if typer.confirm("Submit?"):
+    if submit or typer.confirm("Submit?"):
         try:
             submit(answer, part=part, year=year, day=day)
 

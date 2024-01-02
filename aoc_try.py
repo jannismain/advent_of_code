@@ -73,10 +73,16 @@ def main(
         result = subprocess.run(["pytest", "-s", fp_script], stdout=stdout, stderr=stderr)
         exit(result.returncode)
     try:
+        data_file = pathlib.Path(fp_script.stem)
+        try:
+            data = data_file.read_text()
+        except FileNotFoundError:
+            data = get_data(year=year, day=day)
+            data_file.open("w").write(data)
         result = subprocess.run(
             ["python", fp_script, part],
             text=True,
-            input=get_data(year=year, day=day),
+            input=data,
             capture_output=True,
             check=True,
         )

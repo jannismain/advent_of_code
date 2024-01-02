@@ -161,3 +161,7 @@ cython_debug/
 
 #VSCode
 !/.vscode/launch.json
+
+# Advent of code data
+solutions/*
+!solutions/*.py

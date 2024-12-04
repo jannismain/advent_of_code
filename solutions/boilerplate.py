@@ -3,19 +3,29 @@
 
 def parse(data: str):
     print(data)
+    return data
 
 
 def main(data):
     if isinstance(data, str):
         data = parse(data)
 
+    answer = 0
+
+    print(answer)
+    return answer
+
 
 def main_b(data):
-    return main(data)
+    answer = main(data)
+
+    print(answer)
+    return answer
 
 
 testdata = """
-"""
+<INSERT TESTDATA HERE>
+""".strip()
 
 
 def test():

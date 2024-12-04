@@ -26,6 +26,20 @@ def main(
     show_stats: bool = False,
     submit: bool = False,
 ):
+    """Download Advent of Code tasks, test and upload your solutions.
+
+    CMD can include the following characters `[<year><day>bt-]`:
+
+    - `<year>`: interact with a task of a different year
+
+    - `<day>`: interact with task of a day other than today
+
+    - `b`: act on part b of the given exercise
+
+    - `t`: run tests rather than download a task or upload a solution
+
+    - `-`: show stats
+    """
     from aocd import AocdError, get_data, submit
 
     # parse mini-command language

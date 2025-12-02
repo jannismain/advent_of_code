@@ -87,7 +87,7 @@ def main(
         result = subprocess.run(["pytest", "-s", fp_script], stdout=stdout, stderr=stderr)
         exit(result.returncode)
     try:
-        data_file = pathlib.Path(fp_script.stem)
+        data_file = fp_script.resolve().with_suffix(".input")
         try:
             data = data_file.read_text()
         except FileNotFoundError:
@@ -137,7 +137,7 @@ def echo_stats(stats):
             if "ended" in results:
                 ended = datetime.fromisoformat(results["ended"])
                 started = datetime.fromisoformat(results["started"])
-                typer.secho(f"- {task} solved in {ended-started}")
+                typer.secho(f"- {task} solved in {ended - started}")
             else:
                 typer.secho(f"- {task} unsolved")
 
